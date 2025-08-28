@@ -33,8 +33,9 @@ const Hero = () => {
 
       {/* Layout */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-12 md:gap-6 hero-layout px-5 md:px-20 pt-16">
+        
         {/* LEFT: Hero Content */}
-        <header className="order-1 flex flex-col items-center md:items-start justify-center w-full md:w-1/2 text-center md:text-left gap-6 md:gap-7">
+        <header className="order-1 md:order-1 flex flex-col items-center md:items-start justify-center w-full md:w-1/2 text-center md:text-left gap-6 md:gap-7">
           <div className="hero-text space-y-4">
             <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold leading-snug">
               Shaping{" "}
@@ -56,36 +57,40 @@ const Hero = () => {
                 </span>
               </span>
             </h1>
-            <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold">into Real Projects</h1>
-            <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold">that Deliver Results</h1>
+            <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold">
+              into Real Projects
+            </h1>
+            <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold">
+              that Deliver Results
+            </h1>
           </div>
-
-          <p className="text-gray-400 text-sm sm:text-base md:text-xl max-w-lg">
+          <p className="text-gray-400 text-base md:text-xl max-w-lg">
             Hi, I’m Mohamed Attia, a developer based in Egypt with a passion for code.
           </p>
-
-          <Button text="See My Work" className="w-40 h-10 sm:w-48 sm:h-12 md:w-80 md:h-16" id="counter" />
         </header>
 
+        {/* BUTTON (See My Work) */}
+        <div className="order-2 md:order-1 mt-6 md:mt-0">
+          <Button text="See My Work" className="w-48 h-12 md:w-80 md:h-16" id="counter" />
+        </div>
+
         {/* RIGHT: 3D Model */}
-        <figure className="order-3 md:order-2 w-full md:w-1/2 h-[250px] sm:h-[300px] md:h-[600px] flex justify-center hero-3d-layout">
+        <figure className="order-3 md:order-2 w-full md:w-1/2 h-[300px] md:h-[600px] flex justify-center hero-3d-layout">
           <HeroExperience />
         </figure>
+      </div>
 
-        {/* ✅ صورتك مع Glow بنفسجي */}
-        <div className="order-2 md:order-3 flex justify-center mt-16 sm:mt-20 md:mt-12 mb-8">
-          <img
-            src="/images/attia.png"
-            alt="Mohamed Attia"
-            className="profile-img object-cover w-40 h-40 sm:w-52 sm:h-52 md:w-[400px] md:h-[400px] rounded-full shadow-2xl border-4 border-purple-500 transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-[0_0_60px_15px_rgba(168,85,247,0.8)]"
-          />
-        </div>
+      {/* ✅ صورتك مع Glow بنفسجي */}
+      <div className="flex justify-center mt-12 mb-8 order-4">
+        <img
+          src="/images/attia.png"
+          alt="Mohamed Attia"
+          className="profile-img object-cover w-52 h-52 md:w-[400px] md:h-[400px] rounded-full shadow-2xl border-4 border-purple-500 transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-[0_0_60px_15px_rgba(168,85,247,0.8)]"
+        />
       </div>
 
       {/* الخانات (AnimatedCounter) */}
-      <div className="mt-12 sm:mt-16 md:mt-12">
-        <AnimatedCounter />
-      </div>
+      <AnimatedCounter />
     </section>
   );
 };
