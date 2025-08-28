@@ -27,14 +27,15 @@ const Hero = () => {
   return (
     <section id="hero" className="relative overflow-hidden bg-black text-white">
       {/* Background */}
-      <div className="absolute top-0 left-0 z-10">
-        <img src="/images/bg.png" alt="background" />
+      <div className="absolute top-0 left-0 z-10 w-full h-full">
+        <img src="/images/bg.png" alt="background" className="w-full h-full object-cover" />
       </div>
 
       {/* Layout */}
-      <div className="flex flex-col md:flex-row items-center justify-between gap-12 md:gap-6 hero-layout px-5 md:px-20 pt-16">
+      <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-8 md:gap-6 hero-layout px-5 md:px-20 pt-16">
+
         {/* LEFT: Hero Content */}
-        <header className="order-1 flex flex-col items-center md:items-start justify-center w-full md:w-1/2 text-center md:text-left gap-6 md:gap-7">
+        <header className="flex flex-col items-center md:items-start justify-center w-full md:w-1/2 text-center md:text-left gap-6 md:gap-7">
           <div className="hero-text space-y-4">
             <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold leading-snug">
               Shaping{" "}
@@ -68,21 +69,21 @@ const Hero = () => {
         </header>
 
         {/* RIGHT: 3D Model */}
-        <figure className="order-3 md:order-2 w-full md:w-1/2 h-[250px] sm:h-[300px] md:h-[600px] flex justify-center hero-3d-layout">
+        <figure className="w-full md:w-1/2 h-[300px] sm:h-[400px] md:h-[600px] flex justify-center hero-3d-layout">
           <HeroExperience />
         </figure>
 
-        {/* ✅ صورتك مع Glow بنفسجي */}
-        <div className="order-2 md:order-3 flex justify-center mt-16 sm:mt-20 md:mt-12 mb-8">
+        {/* Profile Image */}
+        <div className="flex justify-center mt-12 sm:mt-16 md:mt-12 mb-8">
           <img
             src="/images/attia.png"
             alt="Mohamed Attia"
-            className="profile-img object-cover w-40 h-40 sm:w-52 sm:h-52 md:w-[400px] md:h-[400px] rounded-full shadow-2xl border-4 border-purple-500 transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-[0_0_60px_15px_rgba(168,85,247,0.8)]"
+            className="profile-img object-cover w-36 sm:w-48 md:w-[400px] h-36 sm:h-48 md:h-[400px] rounded-full shadow-2xl border-4 border-purple-500 transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-[0_0_60px_15px_rgba(168,85,247,0.8)]"
           />
         </div>
       </div>
 
-      {/* الخانات (AnimatedCounter) */}
+      {/* Animated Counters */}
       <div className="mt-12 sm:mt-16 md:mt-12">
         <AnimatedCounter />
       </div>
