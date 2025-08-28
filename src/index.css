@@ -522,3 +522,133 @@ section {
     opacity: 1;
   }
 }
+/* Hero Section Additional Styles */
+.hero-text h1 {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #8b5cf6, #3b82f6, #06b6d4);
+  background-size: 300% 300%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Responsive breakpoint adjustments */
+@media (max-width: 640px) {
+  .hero-text h1 {
+    line-height: 1.2;
+  }
+  
+  .wrapper .flex {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .slide .wrapper span {
+    justify-content: center !important;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .hero-text h1 {
+    line-height: 1.3;
+  }
+}
+
+@media (min-width: 1024px) {
+  .slide .wrapper span {
+    justify-content: flex-start !important;
+  }
+}
+
+/* Enhanced button styling */
+#cta-button {
+  position: relative;
+  overflow: hidden;
+  border-radius: 50px;
+  border: 2px solid transparent;
+  background: linear-gradient(135deg, #8b5cf6, #3b82f6) padding-box,
+              linear-gradient(135deg, #8b5cf6, #3b82f6, #06b6d4) border-box;
+}
+
+#cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+#cta-button:hover::before {
+  left: 100%;
+}
+
+/* Profile image enhancements */
+.profile-img {
+  filter: brightness(1.1) contrast(1.05);
+}
+
+.profile-img:hover {
+  filter: brightness(1.2) contrast(1.1);
+}
+
+/* 3D container improvements */
+.hero-3d-container {
+  perspective: 1000px;
+}
+
+.hero-3d-container > div {
+  transform-style: preserve-3d;
+}
+
+/* Loading states */
+.hero-text h1,
+.profile-img,
+.hero-3d-container {
+  will-change: transform, opacity;
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .text-gradient {
+    animation: none;
+  }
+  
+  .profile-img {
+    transition: none;
+  }
+  
+  #cta-button {
+    transition: none;
+  }
+}
+
+/* Better text contrast on mobile */
+@media (max-width: 768px) {
+  .hero-text h1 {
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+  }
+}
+
+/* Improved spacing for different screen sizes */
+@media (min-width: 1280px) {
+  .hero-text {
+    max-width: 48rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .hero-text {
+    max-width: 56rem;
+  }
+}
