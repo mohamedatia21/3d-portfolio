@@ -13,6 +13,13 @@ const Hero = () => {
       { y: 50, opacity: 0 },
       { y: 0, opacity: 1, stagger: 0.2, duration: 1, ease: "power2.inOut" }
     );
+
+    // Animation للصورة الجديدة
+    gsap.fromTo(
+      ".hero-photo",
+      { scale: 0.8, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 1, ease: "power3.out", delay: 0.3 }
+    );
   });
 
   return (
@@ -51,8 +58,8 @@ const Hero = () => {
             </div>
 
             <p className="text-white-50 md:text-xl relative z-10 pointer-events-none">
-              Hi, I’m Adrian, a developer based in Croatia with a passion for
-              code.
+              Hi, I’m Mohamed Attia, a developer based in Egypt with a passion
+              for code.
             </p>
 
             <Button
@@ -71,6 +78,18 @@ const Hero = () => {
         </figure>
       </div>
 
+      {/* ✅ صورتك فوق الخانات */}
+      <div className="flex justify-center mt-12 mb-8">
+        <img
+          src="/images/attia.png"
+          alt="Mohamed Attia"
+          className="object-cover w-[500px] h-[500px] md:w-[400px] md:h-[400px] shadow-2xl swing-effect glow-effect"
+
+
+        />
+      </div>
+
+      {/* الخانات (AnimatedCounter) */}
       <AnimatedCounter />
     </section>
   );
