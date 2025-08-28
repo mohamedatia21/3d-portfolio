@@ -36,13 +36,22 @@ const Hero = () => {
       </div>
 
       {/* Main Container */}
-      <div className="relative z-10 min-h-screen flex flex-col">
+      <div className="relative z-10 min-h-screen flex flex-col pt-16 lg:pt-20">
         
+        {/* 3D Model - يظهر أولاً في الموبايل */}
+        <div className="flex justify-center px-4 sm:px-6 md:px-8 pt-8 pb-4 lg:hidden">
+          <div className="hero-3d-container w-full max-w-sm">
+            <div className="relative w-full h-[280px] sm:h-[320px]">
+              <HeroExperience />
+            </div>
+          </div>
+        </div>
+
         {/* Hero Content */}
-        <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 px-4 sm:px-6 md:px-8 lg:px-20 pt-20 pb-8">
+        <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 px-4 sm:px-6 md:px-8 lg:px-20 pb-8">
           
           {/* LEFT: Text Content */}
-          <div className="flex flex-col justify-center items-center lg:items-start text-center lg:text-left order-2 lg:order-1">
+          <div className="flex flex-col justify-center items-center lg:items-start text-center lg:text-left">
             <div className="hero-text space-y-4 md:space-y-6 max-w-2xl">
               <h1 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-bold leading-tight">
                 Shaping{" "}
@@ -89,18 +98,18 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* RIGHT: 3D Model Container */}
-          <div className="flex items-center justify-center order-1 lg:order-2">
-            <div className="hero-3d-container w-full max-w-lg lg:max-w-none">
-              <div className="relative w-full h-[350px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px]">
+          {/* RIGHT: 3D Model Container - يظهر فقط في اللابتوب */}
+          <div className="hidden lg:flex items-center justify-center">
+            <div className="hero-3d-container w-full max-w-none">
+              <div className="relative w-full h-[600px] xl:h-[700px]">
                 <HeroExperience />
               </div>
             </div>
           </div>
         </div>
 
-        {/* Profile Image Section */}
-        <div className="flex justify-center px-4 sm:px-6 md:px-8 py-8 md:py-12">
+        {/* Profile Image Section - فوق الـ counters مباشرة */}
+        <div className="flex justify-center px-4 sm:px-6 md:px-8 py-6 md:py-8">
           <div className="relative">
             <img
               src="/images/attia.png"
@@ -111,7 +120,7 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Animated Counters */}
+        {/* Animated Counters - مباشرة تحت الصورة */}
         <div className="px-4 sm:px-6 md:px-8 lg:px-20 pb-12 md:pb-16">
           <AnimatedCounter />
         </div>
