@@ -26,6 +26,7 @@ const Hero = () => {
 
   return (
     <section id="hero" className="relative overflow-hidden bg-black text-white">
+
       {/* Background */}
       <div className="absolute top-0 left-0 z-10 w-full h-full">
         <img
@@ -36,7 +37,12 @@ const Hero = () => {
       </div>
 
       {/* Layout */}
-      <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-8 md:gap-6 hero-layout px-5 sm:px-10 md:px-20 pt-16">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-6 hero-layout px-5 sm:px-10 md:px-20 pt-16">
+        
+        {/* RIGHT: 3D Model */}
+        <figure className="w-full md:w-1/2 min-h-[300px] sm:min-h-[400px] md:min-h-[600px] flex justify-center hero-3d-layout hero-photo order-1 md:order-2">
+          <HeroExperience />
+        </figure>
 
         {/* LEFT: Hero Content */}
         <header className="flex flex-col items-center md:items-start justify-center w-full md:w-1/2 text-center md:text-left gap-6 md:gap-7 order-2 md:order-1">
@@ -79,15 +85,10 @@ const Hero = () => {
             id="counter"
           />
         </header>
-
-        {/* RIGHT: 3D Model */}
-        <figure className="w-full md:w-1/2 min-h-[300px] sm:min-h-[400px] md:min-h-[600px] flex justify-center hero-3d-layout hero-photo order-1 md:order-2">
-          <HeroExperience />
-        </figure>
       </div>
 
       {/* Profile Image */}
-      <div className="flex justify-center mt-12 sm:mt-16 md:mt-12 mb-8">
+      <div className="flex justify-center mt-8">
         <div className="p-1 rounded-[50%_20%_50%_20%] bg-gradient-to-r from-purple-500 to-green-400 hover:animate-pulse">
           <img
             src="/images/attia.png"
@@ -98,7 +99,7 @@ const Hero = () => {
       </div>
 
       {/* Animated Counters */}
-      <div className="mt-12 sm:mt-16 md:mt-12">
+      <div className="mt-8 sm:mt-12 md:mt-12">
         <AnimatedCounter />
       </div>
     </section>
