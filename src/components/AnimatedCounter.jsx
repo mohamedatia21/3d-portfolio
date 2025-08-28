@@ -16,40 +16,61 @@ const AnimatedCounter = () => {
       const numberElement = counter.querySelector(".counter-number");
       const item = counterItems[index];
 
-      // Set initial value to 0
       gsap.set(numberElement, { innerText: "0" });
 
-      // Create the counting animation
       gsap.to(numberElement, {
         innerText: item.value,
         duration: 2.5,
         ease: "power2.out",
-        snap: { innerText: 1 }, // Ensures whole numbers
+        snap: { innerText: 1 },
         scrollTrigger: {
-          trigger: "#counter",
-          start: "top center",
+          trigger: counter,
+          start: "top 80%",
         },
-        // Add the suffix after counting is complete
         onComplete: () => {
           numberElement.textContent = `${item.value}${item.suffix}`;
         },
       });
-    }, counterRef);
+
+      // إضافة حركة دخول للكروت نفسها
+      gsap.fromTo(
+        counter,
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: counter,
+            start: "top 85%",
+          },
+        }
+      );
+    });
   }, []);
 
   return (
-    <div id="counter" ref={counterRef} className="padding-x-lg xl:mt-0 mt-32">
-      <div className="mx-auto grid-4-cols">
+    <div
+      id="counter"
+      ref={counterRef}
+      className="padding-x-lg xl:mt-0 mt-20"
+    >
+      <div
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto"
+      >
         {counterItems.map((item, index) => (
           <div
             key={index}
             ref={(el) => el && (countersRef.current[index] = el)}
-            className="bg-zinc-900 rounded-lg p-10 flex flex-col justify-center"
+            className="bg-gradient-to-br from-purple-700 to-indigo-900 rounded-2xl p-8 flex flex-col justify-center items-center text-center shadow-lg transform hover:scale-105 transition-all duration-500"
           >
-            <div className="counter-number text-white-50 text-5xl font-bold mb-2">
-              0 {item.suffix}
+            <div className="counter-number text-white text-5xl font-bold mb-3">
+              0{item.suffix}
             </div>
-            <div className="text-white-50 text-lg">{item.label}</div>
+            <div className="text-gray-300 text-lg font-medium">
+              {item.label}
+            </div>
           </div>
         ))}
       </div>

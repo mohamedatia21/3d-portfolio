@@ -496,3 +496,29 @@ section {
   border-radius: 14px;
 }
 
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}
+
+@media (max-width: 768px) {
+  .animate-marquee {
+    animation-duration: 40s; /* أبطأ للموبايل */
+  }
+}
+@keyframes zoomFade {
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
