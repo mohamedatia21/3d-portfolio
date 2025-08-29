@@ -6,7 +6,7 @@ import { words, counterItems } from "../constants";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// مكون منفصل للكلمات المتغيرة مع تحسينات
+// مكون منفصل للكلمات المتغيرة مع تحسينات وحجم أصغر
 const WordRotator = memo(({ currentWordIndex }) => {
   const [displayIndex, setDisplayIndex] = useState(currentWordIndex);
   
@@ -18,9 +18,9 @@ const WordRotator = memo(({ currentWordIndex }) => {
   }, [currentWordIndex]);
 
   return (
-    <span className="inline-flex items-center min-w-[180px] sm:min-w-[220px] md:min-w-[280px] lg:min-w-[320px] xl:min-w-[380px] justify-center lg:justify-start">
-      <div className="flex items-center gap-2 sm:gap-3">
-        <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 xl:w-16 xl:h-16 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 p-1 sm:p-1.5 md:p-2 shadow-lg transition-all duration-500">
+    <span className="inline-flex items-center min-w-[120px] sm:min-w-[140px] md:min-w-[160px] lg:min-w-[180px] xl:min-w-[200px] justify-center lg:justify-start">
+      <div className="flex items-center gap-1 sm:gap-2">
+        <div className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 xl:w-14 xl:h-14 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 p-1 shadow-lg transition-all duration-500">
           <img
             key={`img-${displayIndex}`}
             src={words[displayIndex].imgPath}
@@ -230,21 +230,21 @@ const Hero = () => {
         <div className="w-full lg:w-1/2 order-2 lg:order-1 text-center lg:text-left">
           <div className="space-y-6 sm:space-y-8 lg:space-y-10">
             
-            {/* Hero Title */}
+            {/* Hero Title - Properly arranged in two lines */}
             <div className="hero-text space-y-3 sm:space-y-4 lg:space-y-6">
-              <h1 className="hero-title-line text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight">
-                Shaping{" "}
-                <WordRotator currentWordIndex={currentWordIndex} />
-              </h1>
-              <h1 className="hero-title-line text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight">
-                into Real Projects
-              </h1>
-              <h1 className="hero-title-line text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight">
+              <div className="hero-title-line text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight">
+                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-1 sm:gap-2">
+                  <span>Shaping</span>
+                  <WordRotator currentWordIndex={currentWordIndex} />
+                  <span>into Real Projects</span>
+                </div>
+              </div>
+              <div className="hero-title-line text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight text-center lg:text-left">
                 that{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
                   Deliver Results
                 </span>
-              </h1>
+              </div>
             </div>
 
             {/* Description */}
