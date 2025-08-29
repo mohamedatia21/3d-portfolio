@@ -1,9 +1,23 @@
 import { useRef, useState, useEffect, useCallback } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
 
-gsap.registerPlugin(ScrollTrigger);
+// بديل بسيط للـ GSAP functions
+const simpleAnimate = {
+  fromTo: (element, from, to) => {
+    if (!element) return;
+    Object.assign(element.style, from);
+    requestAnimationFrame(() => {
+      Object.assign(element.style, to);
+    });
+  },
+  utils: {
+    toArray: (selector) => {
+      if (typeof selector === 'string') {
+        return Array.from(document.querySelectorAll(selector));
+      }
+      return Array.isArray(selector) ? selector : [selector];
+    }
+  }
+};
 
 const AppShowcase = () => {
   const sectionRef = useRef(null);
@@ -11,6 +25,7 @@ const AppShowcase = () => {
   const [activeFilter, setActiveFilter] = useState('all');
   const [isLoading, setIsLoading] = useState(true);
   const [hoveredCard, setHoveredCard] = useState(null);
+  const [screenSize, setScreenSize] = useState({ width: 0, height: 0 });
 
   const projects = [
     { 
@@ -20,7 +35,8 @@ const AppShowcase = () => {
       category: "web",
       description: "Interactive 3D portfolio showcasing modern web technologies with stunning animations and responsive design.",
       link: "https://3d-portfolio-three-nu.vercel.app/",
-      github: "https://github.com/mohamedattia/3d-portfolio"
+      github: "https://github.com/mohamedattia/3d-portfolio",
+      color: "from-purple-500 to-blue-500"
     },
     { 
       img: "/images/thecupegame.jpg", 
@@ -29,7 +45,8 @@ const AppShowcase = () => {
       category: "game",
       description: "Engaging puzzle game with multiple levels, smooth animations, and intuitive gameplay mechanics.",
       link: "#",
-      github: "#"
+      github: "#",
+      color: "from-green-500 to-teal-500"
     },
     { 
       img: "/images/coloron.jpg", 
@@ -38,7 +55,8 @@ const AppShowcase = () => {
       category: "game",
       description: "Fun and colorful interactive game featuring dynamic color matching and responsive design.",
       link: "#",
-      github: "#"
+      github: "#",
+      color: "from-orange-500 to-red-500"
     },
     { 
       img: "/images/3Dcard.jpg", 
@@ -47,7 +65,8 @@ const AppShowcase = () => {
       category: "animation",
       description: "Stunning 3D card animations with realistic physics and smooth transitions using advanced web technologies.",
       link: "#",
-      github: "#"
+      github: "#",
+      color: "from-pink-500 to-purple-500"
     },
   ];
 
@@ -61,6 +80,20 @@ const AppShowcase = () => {
   const filteredProjects = activeFilter === 'all' 
     ? projects 
     : projects.filter(project => project.category === activeFilter);
+
+  // مراقب حجم الشاشة
+  useEffect(() => {
+    const updateScreenSize = () => {
+      setScreenSize({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    };
+
+    updateScreenSize();
+    window.addEventListener("resize", updateScreenSize);
+    return () => window.removeEventListener("resize", updateScreenSize);
+  }, []);
 
   // تأثيرات تحميل الصور
   useEffect(() => {
@@ -111,82 +144,91 @@ const AppShowcase = () => {
     setActiveFilter(filter);
   }, []);
 
-  useGSAP(() => {
-    if (isLoading) return;
+  const getDeviceType = (width) => {
+    if (width < 640) return 'mobile';
+    if (width < 768) return 'tablet-sm';
+    if (width < 1024) return 'tablet';
+    return 'desktop';
+  };
+
+  // بديل بسيط لـ useGSAP - بس أنيميشن CSS
+  useEffect(() => {
+    if (isLoading || screenSize.width === 0) return;
+
+    const deviceType = getDeviceType(screenSize.width);
+    const isMobile = deviceType === 'mobile';
 
     // أنيميشن العنوان
-    gsap.fromTo(
-      ".showcase-title",
-      { y: 50, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom-=150",
-        },
-      }
-    );
+    const titleElement = document.querySelector(".showcase-title");
+    if (titleElement) {
+      titleElement.style.opacity = '0';
+      titleElement.style.transform = `translateY(${isMobile ? '30px' : '50px'})`;
+      titleElement.style.transition = 'all 1s ease-out';
+      
+      setTimeout(() => {
+        titleElement.style.opacity = '1';
+        titleElement.style.transform = 'translateY(0)';
+      }, 100);
+    }
 
     // أنيميشن الفلاتر
-    gsap.fromTo(
-      ".filter-btn",
-      { y: 30, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: "back.out(1.7)",
-        scrollTrigger: {
-          trigger: ".filters-container",
-          start: "top bottom-=100",
-        },
-      }
-    );
-
-    // أنيميشن الكروت بدون تداخل
-    gsap.fromTo(
-      ".project-card",
-      { 
-        y: 60, 
-        opacity: 0,
-        scale: 0.95
-      },
-      {
-        y: 0,
-        opacity: 1,
-        scale: 1,
-        duration: 1,
-        stagger: {
-          amount: 0.4,
-          from: "start"
-        },
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom-=100",
-        },
-      }
-    );
-
-    // تأثير parallax خفيف للكروت (مزال لتجنب التداخل)
-    gsap.utils.toArray(".project-card").forEach((card, i) => {
-      gsap.to(card, {
-        yPercent: -10 * (i % 2 === 0 ? 1 : -1),
-        ease: "none",
-        scrollTrigger: {
-          trigger: card,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 0.5,
-        },
-      });
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    filterButtons.forEach((btn, index) => {
+      btn.style.opacity = '0';
+      btn.style.transform = `translateY(${isMobile ? '20px' : '30px'})`;
+      btn.style.transition = 'all 0.8s ease-out';
+      
+      setTimeout(() => {
+        btn.style.opacity = '1';
+        btn.style.transform = 'translateY(0)';
+      }, 200 + (index * 100));
     });
 
-  }, [isLoading, activeFilter]);
+    // أنيميشن الكروت
+    const cards = document.querySelectorAll(".project-card");
+    cards.forEach((card, index) => {
+      const moveDistance = isMobile ? 40 : 60;
+      card.style.opacity = '0';
+      card.style.transform = `translateY(${moveDistance}px) scale(0.9) rotateX(15deg)`;
+      card.style.transition = 'all 1s ease-out';
+      
+      setTimeout(() => {
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0) scale(1) rotateX(0deg)';
+      }, 400 + (index * 200));
+    });
+
+  }, [isLoading, activeFilter, screenSize.width]);
+
+  // تأثير الكتابة المتحركة للعناوين
+  const handleCardHover = useCallback((index, isEntering) => {
+    if (isEntering) {
+      setHoveredCard(index);
+      
+      // أنيميشن النص بالكتابة
+      const titleElement = document.querySelector(`.project-card-${index} .card-title`);
+      if (titleElement) {
+        const text = titleElement.textContent;
+        titleElement.textContent = '';
+        
+        // كتابة الحروف واحد واحد
+        let i = 0;
+        const typeWriter = () => {
+          if (i < text.length) {
+            titleElement.textContent += text.charAt(i);
+            i++;
+            setTimeout(typeWriter, 50);
+          }
+        };
+        typeWriter();
+      }
+    } else {
+      setHoveredCard(null);
+    }
+  }, []);
+
+  const deviceType = getDeviceType(screenSize.width);
+  const isMobile = deviceType === 'mobile';
 
   return (
     <section 
@@ -254,22 +296,37 @@ const AppShowcase = () => {
           <div className="flex justify-center items-center py-20">
             <div className="flex space-x-2">
               <div className="w-3 h-3 bg-purple-400 rounded-full animate-bounce"></div>
-              <div className="w-3 h-3 bg-blue-400 rounded-full animate-bounce delay-100"></div>
-              <div className="w-3 h-3 bg-green-400 rounded-full animate-bounce delay-200"></div>
+              <div className="w-3 h-3 bg-blue-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+              <div className="w-3 h-3 bg-green-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
             </div>
           </div>
         )}
 
         {/* شبكة المشاريع - محسنة للأجهزة */}
         {!isLoading && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 xl:gap-10">
+          <div className={`
+            grid gap-6 lg:gap-8 xl:gap-10
+            ${isMobile ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-2'}
+          `}>
             {filteredProjects.map((project, index) => (
               <div
                 key={`${project.title}-${activeFilter}`}
-                className="project-card group relative bg-gradient-to-br from-gray-900/90 to-gray-800/90 rounded-xl lg:rounded-2xl overflow-hidden transition-all duration-500 hover:scale-[1.01] lg:hover:scale-[1.02] hover:shadow-xl hover:shadow-purple-500/15 cursor-pointer border border-gray-700/50 hover:border-purple-500/40"
-                onMouseEnter={() => setHoveredCard(index)}
-                onMouseLeave={() => setHoveredCard(null)}
+                className={`
+                  project-card project-card-${index} group relative 
+                  bg-gradient-to-br from-gray-900/90 to-gray-800/90 
+                  rounded-xl lg:rounded-2xl overflow-hidden 
+                  transition-all duration-500 
+                  hover:scale-[1.02] hover:shadow-xl hover:shadow-purple-500/15 
+                  cursor-pointer border border-gray-700/50 hover:border-purple-500/40
+                  ${isMobile ? 'mx-auto max-w-sm' : ''}
+                `}
+                onMouseEnter={() => handleCardHover(index, true)}
+                onMouseLeave={() => handleCardHover(index, false)}
                 onClick={() => handleImageClick(project.img)}
+                style={{
+                  transform: `translateZ(${index * 10}px)`, // منع التداخل
+                  zIndex: hoveredCard === index ? 20 : 10 - index
+                }}
               >
                 {/* الصورة */}
                 <div className="relative overflow-hidden">
@@ -280,8 +337,14 @@ const AppShowcase = () => {
                     loading="lazy"
                   />
                   
-                  {/* تأثير التدرج */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-70 group-hover:opacity-80 transition-opacity duration-500" />
+                  {/* تأثير التدرج المتحرك */}
+                  <div className={`
+                    absolute inset-0 bg-gradient-to-t ${project.color} 
+                    opacity-0 group-hover:opacity-20 transition-opacity duration-500
+                  `} />
+                  
+                  {/* تأثير التدرج الأسود */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-70 group-hover:opacity-60 transition-opacity duration-500" />
                   
                   {/* أيقونة التكبير */}
                   <div className={`
@@ -301,7 +364,14 @@ const AppShowcase = () => {
                     transition-all duration-500 transform
                     ${hoveredCard === index ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-95'}
                   `}>
-                    <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-1 lg:mb-2">
+                    <h3 className={`
+                      card-title text-lg sm:text-xl lg:text-2xl font-bold mb-1 lg:mb-2
+                      transition-all duration-300
+                      ${hoveredCard === index 
+                        ? `text-transparent bg-clip-text bg-gradient-to-r ${project.color}` 
+                        : 'text-white'
+                      }
+                    `}>
                       {project.title}
                     </h3>
                     <p className="text-purple-300 text-xs sm:text-sm lg:text-base font-medium mb-2 lg:mb-3">
@@ -328,7 +398,11 @@ const AppShowcase = () => {
                           href={project.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-3 py-1.5 lg:px-4 lg:py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs lg:text-sm font-medium rounded-md lg:rounded-lg transition-colors duration-300"
+                          className={`
+                            px-3 py-1.5 lg:px-4 lg:py-2 text-white text-xs lg:text-sm font-medium 
+                            rounded-md lg:rounded-lg transition-all duration-300 transform hover:scale-105
+                            bg-gradient-to-r ${project.color} hover:shadow-lg
+                          `}
                           onClick={(e) => e.stopPropagation()}
                         >
                           Live Demo
@@ -339,7 +413,7 @@ const AppShowcase = () => {
                           href={project.github}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-3 py-1.5 lg:px-4 lg:py-2 border border-gray-600 hover:border-gray-500 text-gray-300 hover:text-white text-xs lg:text-sm font-medium rounded-md lg:rounded-lg transition-all duration-300"
+                          className="px-3 py-1.5 lg:px-4 lg:py-2 border border-gray-600 hover:border-gray-500 text-gray-300 hover:text-white text-xs lg:text-sm font-medium rounded-md lg:rounded-lg transition-all duration-300 transform hover:scale-105"
                           onClick={(e) => e.stopPropagation()}
                         >
                           GitHub
@@ -349,8 +423,11 @@ const AppShowcase = () => {
                   </div>
                 </div>
 
-                {/* تأثير الوهج المخفف */}
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-xl lg:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm -z-10" />
+                {/* تأثير الوهج المخصص للمشروع */}
+                <div className={`
+                  absolute -inset-0.5 bg-gradient-to-r ${project.color} opacity-0 
+                  group-hover:opacity-20 transition-opacity duration-500 blur-sm -z-10 rounded-xl lg:rounded-2xl
+                `} />
               </div>
             ))}
           </div>
@@ -382,7 +459,6 @@ const AppShowcase = () => {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  // تحميل الصورة
                   const link = document.createElement('a');
                   link.download = 'project-image.jpg';
                   link.href = fullscreenImage;
@@ -411,9 +487,6 @@ const AppShowcase = () => {
               src={fullscreenImage}
               alt="Fullscreen project view"
               className="max-w-full max-h-[85vh] rounded-xl shadow-2xl animate-[zoomFade_0.5s_ease-out_forwards] opacity-0"
-              style={{
-                animation: 'zoomFade 0.5s ease-out forwards'
-              }}
             />
           </div>
         </div>
@@ -429,6 +502,16 @@ const AppShowcase = () => {
           to {
             opacity: 1;
             transform: scale(1);
+          }
+        }
+        
+        .project-card {
+          transform-style: preserve-3d;
+        }
+        
+        @media (max-width: 1023px) {
+          .project-card {
+            transform: none !important;
           }
         }
       `}</style>

@@ -186,7 +186,7 @@ const Footer = () => {
           {/* رسالة خفية للمطورين */}
           <div className="mt-8 text-center">
             <p className="text-xs text-gray-600 opacity-50 hover:opacity-100 transition-opacity">
-              Made with ❤️ and lots of ☕
+              Made with ☕ and lots of ☕
             </p>
           </div>
         </div>

@@ -1,31 +1,49 @@
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
+import { useEffect } from "react";
 
 import TitleHeader from "../components/TitleHeader";
 import TechIconCardExperience from "../components/models/tech_logos/TechIconCardExperience";
 import { techStackIcons } from "../constants";
 
 const TechStack = () => {
-  useGSAP(() => {
-    gsap.fromTo(
-      ".tech-card",
-      {
-        y: 50,
-        opacity: 0,
-      },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        ease: "power2.inOut",
-        stagger: 0.2,
-        scrollTrigger: {
-          trigger: "#skills",
-          start: "top center",
-        },
+  // بديل بسيط لـ useGSAP
+  useEffect(() => {
+    const techCards = document.querySelectorAll(".tech-card");
+    
+    // إضافة الأنيميشن للكروت
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const cards = entry.target.querySelectorAll(".tech-card");
+          cards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(50px)';
+            card.style.transition = 'all 1s ease-in-out';
+            
+            setTimeout(() => {
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+            }, index * 200); // stagger effect
+          });
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -10% 0px'
+    });
+
+    const skillsSection = document.getElementById('skills');
+    if (skillsSection) {
+      observer.observe(skillsSection);
+    }
+
+    return () => {
+      if (skillsSection) {
+        observer.unobserve(skillsSection);
       }
-    );
-  });
+    };
+  }, []);
 
   return (
     <div id="skills" className="flex-center section-padding">
