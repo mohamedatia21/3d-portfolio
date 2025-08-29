@@ -81,8 +81,14 @@ const Footer = () => {
               <div className="space-y-3">
                 <p className="text-gray-400">
                   <span className="inline-block w-5">📧</span>
-                  <a href="mailto:contact@mohamedattia.dev" className="hover:text-purple-400 transition-colors">
-                    contact@mohamedattia.dev
+                  <a href="mailto:mohamedatia9123@gmail.com" className="hover:text-purple-400 transition-colors">
+                    mohamedatia9123@gmail.com
+                  </a>
+                </p>
+                <p className="text-gray-400">
+                  <span className="inline-block w-5">📱</span>
+                  <a href="tel:01062984466" className="hover:text-purple-400 transition-colors">
+                    01062984466
                   </a>
                 </p>
                 <p className="text-gray-400">
