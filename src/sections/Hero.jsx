@@ -51,7 +51,7 @@ const Hero = () => {
     setIsLoaded(true);
     const interval = setInterval(() => {
       setCurrentWordIndex((prev) => (prev + 1) % words.length);
-    }, 2000);
+    }, 4000);
     return () => {
       window.removeEventListener("resize", checkMobile);
       clearInterval(interval);
