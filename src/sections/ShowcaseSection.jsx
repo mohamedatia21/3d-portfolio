@@ -147,26 +147,24 @@ const AppShowcase = () => {
       }
     );
 
-    // أنيميشن الكروت
+    // أنيميشن الكروت بدون تداخل
     gsap.fromTo(
       ".project-card",
       { 
-        y: 80, 
+        y: 60, 
         opacity: 0,
-        scale: 0.9,
-        rotationX: 15
+        scale: 0.95
       },
       {
         y: 0,
         opacity: 1,
         scale: 1,
-        rotationX: 0,
-        duration: 1.2,
+        duration: 1,
         stagger: {
-          amount: 0.8,
+          amount: 0.4,
           from: "start"
         },
-        ease: "power3.out",
+        ease: "power2.out",
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top bottom-=100",
@@ -174,16 +172,16 @@ const AppShowcase = () => {
       }
     );
 
-    // تأثير الشلل (Parallax) للكروت
+    // تأثير parallax خفيف للكروت (مزال لتجنب التداخل)
     gsap.utils.toArray(".project-card").forEach((card, i) => {
       gsap.to(card, {
-        yPercent: -50 * (i % 2 === 0 ? 1 : -1),
+        yPercent: -10 * (i % 2 === 0 ? 1 : -1),
         ease: "none",
         scrollTrigger: {
           trigger: card,
           start: "top bottom",
           end: "bottom top",
-          scrub: 1,
+          scrub: 0.5,
         },
       });
     });
@@ -262,13 +260,13 @@ const AppShowcase = () => {
           </div>
         )}
 
-        {/* شبكة المشاريع */}
+        {/* شبكة المشاريع - محسنة للأجهزة */}
         {!isLoading && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 lg:gap-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 xl:gap-10">
             {filteredProjects.map((project, index) => (
               <div
                 key={`${project.title}-${activeFilter}`}
-                className="project-card group relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl md:rounded-3xl overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-purple-500/20 cursor-pointer border border-gray-700/50 hover:border-purple-500/50"
+                className="project-card group relative bg-gradient-to-br from-gray-900/90 to-gray-800/90 rounded-xl lg:rounded-2xl overflow-hidden transition-all duration-500 hover:scale-[1.01] lg:hover:scale-[1.02] hover:shadow-xl hover:shadow-purple-500/15 cursor-pointer border border-gray-700/50 hover:border-purple-500/40"
                 onMouseEnter={() => setHoveredCard(index)}
                 onMouseLeave={() => setHoveredCard(null)}
                 onClick={() => handleImageClick(project.img)}
@@ -278,43 +276,43 @@ const AppShowcase = () => {
                   <img
                     src={project.img}
                     alt={project.title}
-                    className="w-full h-56 sm:h-64 md:h-72 lg:h-80 object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                    className="w-full h-48 sm:h-56 lg:h-64 xl:h-72 object-cover transition-all duration-700 group-hover:scale-105 group-hover:brightness-110"
                     loading="lazy"
                   />
                   
                   {/* تأثير التدرج */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-70 group-hover:opacity-80 transition-opacity duration-500" />
                   
                   {/* أيقونة التكبير */}
                   <div className={`
-                    absolute top-4 right-4 w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full 
+                    absolute top-3 right-3 w-8 h-8 lg:w-10 lg:h-10 bg-white/10 backdrop-blur-sm rounded-full 
                     flex items-center justify-center transition-all duration-300
                     ${hoveredCard === index ? 'opacity-100 scale-100' : 'opacity-0 scale-75'}
                   `}>
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 lg:w-5 lg:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
                     </svg>
                   </div>
                 </div>
 
                 {/* محتوى الكارت */}
-                <div className="absolute inset-0 flex flex-col justify-end p-4 md:p-6 lg:p-8">
+                <div className="absolute inset-0 flex flex-col justify-end p-4 lg:p-6">
                   <div className={`
                     transition-all duration-500 transform
-                    ${hoveredCard === index ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-90'}
+                    ${hoveredCard === index ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-95'}
                   `}>
-                    <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 md:mb-3">
+                    <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-1 lg:mb-2">
                       {project.title}
                     </h3>
-                    <p className="text-purple-300 text-sm md:text-base font-medium mb-3">
+                    <p className="text-purple-300 text-xs sm:text-sm lg:text-base font-medium mb-2 lg:mb-3">
                       {project.tech}
                     </p>
                     
-                    {/* الوصف */}
+                    {/* الوصف - يظهر فقط على الشاشات الكبيرة */}
                     <p className={`
-                      text-gray-300 text-sm md:text-base leading-relaxed mb-4
+                      hidden lg:block text-gray-300 text-sm leading-relaxed mb-3
                       transition-all duration-500
-                      ${hoveredCard === index ? 'opacity-100 max-h-20' : 'opacity-0 max-h-0'}
+                      ${hoveredCard === index ? 'opacity-100 max-h-16' : 'opacity-0 max-h-0'}
                       overflow-hidden
                     `}>
                       {project.description}
@@ -322,15 +320,15 @@ const AppShowcase = () => {
 
                     {/* الروابط */}
                     <div className={`
-                      flex gap-3 transition-all duration-500
-                      ${hoveredCard === index ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}
+                      flex gap-2 lg:gap-3 transition-all duration-500
+                      ${hoveredCard === index ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-1'}
                     `}>
                       {project.link !== '#' && (
                         <a
                           href={project.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg transition-colors duration-300"
+                          className="px-3 py-1.5 lg:px-4 lg:py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs lg:text-sm font-medium rounded-md lg:rounded-lg transition-colors duration-300"
                           onClick={(e) => e.stopPropagation()}
                         >
                           Live Demo
@@ -341,7 +339,7 @@ const AppShowcase = () => {
                           href={project.github}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-4 py-2 border border-gray-600 hover:border-gray-500 text-gray-300 hover:text-white text-sm font-medium rounded-lg transition-all duration-300"
+                          className="px-3 py-1.5 lg:px-4 lg:py-2 border border-gray-600 hover:border-gray-500 text-gray-300 hover:text-white text-xs lg:text-sm font-medium rounded-md lg:rounded-lg transition-all duration-300"
                           onClick={(e) => e.stopPropagation()}
                         >
                           GitHub
@@ -351,8 +349,8 @@ const AppShowcase = () => {
                   </div>
                 </div>
 
-                {/* تأثير الوهج */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-2xl md:rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm -z-10" />
+                {/* تأثير الوهج المخفف */}
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-xl lg:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm -z-10" />
               </div>
             ))}
           </div>

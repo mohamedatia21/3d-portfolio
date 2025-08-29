@@ -29,10 +29,10 @@ const words = [
 ];
 
 const counterItems = [
-  { value: 1, suffix: "+", label: "Years of Experience" },
-  { value: 3, suffix: "+", label: "Satisfied Clients" },
+  { value: 2, suffix: "+", label: "Years of Experience" },
+  { value: 4, suffix: "+", label: "Satisfied Clients" },
   { value: 7, suffix: "+", label: "Completed Projects" },
-  { value: 79, suffix: "%", label: "Client Retention Rate" },
+  { value: 80, suffix: "%", label: "Client Retention Rate" },
 ];
 
 const logoIconsList = [
@@ -197,10 +197,12 @@ const socialImgs = [
   {
     name: "insta",
     imgPath: "/images/insta.png",
+    link:"https://www.instagram.com/mohamedatia142?igsh=MWQ2enV2ODJ2dWVueQ==",
   },
   {
     name: "fb",
     imgPath: "/images/fb.png",
+    link:"https://www.facebook.com/share/1CQsfUVBMK/",
   },
   {
     name: "x",
@@ -208,7 +210,8 @@ const socialImgs = [
   },
   {
     name: "linkedin",
-    imgPath: "/images/linkedin.png",
+    imgPath: "/images/linkedin.png",                                                                                                                         
+    link:"https://www.linkedin.com/in/mohamed-attia-665019323?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
   },
 ];
 
