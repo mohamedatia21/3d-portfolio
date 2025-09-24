@@ -454,30 +454,15 @@ const Hero = () => {
             }}
           >
             <div className="profile-glow relative">
-              {/* خلفية أنيقة ومناسبة للصورة */}
-              <div className="absolute inset-0 bg-gradient-to-br from-slate-800 via-gray-800 to-slate-700 rounded-2xl shadow-2xl border border-slate-600/50"></div>
-              
-              {/* طبقة إضافية للعمق */}
-              <div className="absolute inset-1 bg-gradient-to-t from-gray-900/50 to-transparent rounded-xl"></div>
-              
               <img
                 src="/images/attia.png"
                 alt="Mohamed Attia - Full Stack Developer"
-                className="profile-img relative z-10 object-cover h-auto rounded-2xl transition-all duration-500 group-hover:scale-105 w-56 sm:w-64 md:w-80 lg:w-96 xl:w-[28rem] 2xl:w-[32rem] p-4"
+                className="profile-img object-cover h-auto rounded-lg transition-all duration-500 group-hover:scale-105 w-56 sm:w-64 md:w-80 lg:w-96 xl:w-[28rem] 2xl:w-[32rem]"
                 loading="eager"
                 sizes="(max-width: 640px) 224px, (max-width: 768px) 256px, (max-width: 1024px) 320px, 448px"
               />
-              
-              {/* إطار رفيع أنيق */}
-              <div className="absolute inset-0 rounded-2xl border border-purple-400/30 group-hover:border-purple-400/60 transition-colors duration-300"></div>
-              
-              {/* نقاط صغيرة زخرفية */}
-              <div className="absolute top-4 left-4 w-2 h-2 bg-purple-400/40 rounded-full"></div>
-              <div className="absolute top-6 left-6 w-1 h-1 bg-blue-400/40 rounded-full"></div>
-              <div className="absolute bottom-6 right-6 w-1 h-1 bg-purple-400/40 rounded-full"></div>
-              
               {/* Click hint */}
-              <div className="absolute bottom-4 right-4 bg-white/90 text-gray-800 px-3 py-1 rounded-full text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+              <div className="absolute bottom-4 right-4 bg-white/90 text-gray-800 px-3 py-1 rounded-full text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 
               </div>
             </div>
