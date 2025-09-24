@@ -39,6 +39,16 @@ const AppShowcase = () => {
       color: "from-purple-500 to-blue-500"
     },
     { 
+      img: "/images/hotel-system.png", 
+      title: "Hotel Management System", 
+      tech: "Python • Tkinter • Mysql • OOP",
+      category: "web",
+      description: "Complete hotel management system with room booking, guest management, and real-time dashboard. Fully responsive across all devices.",
+      link: "https://mohamedatia21.github.io/hotel-management-system/",
+      github: "https://github.com/mohamedatia21/hotel-management-system",
+      color: "from-blue-600 to-indigo-600"
+    },
+    { 
       img: "/images/thecupegame.jpg", 
       title: "The Cupe Game", 
       tech: "JavaScript • Canvas • Game Logic",
