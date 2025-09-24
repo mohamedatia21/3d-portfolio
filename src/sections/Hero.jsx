@@ -187,12 +187,12 @@ const Hero = () => {
       ease: "power2.out",
     })
     .to(".profile-glow", {
-      boxShadow: "0 0 100px 30px rgba(168,85,247,0.8), 0 0 50px 15px rgba(20,183,137,0.6)",
+      transform: "scale(1.05)",
       duration: 0.4,
       ease: "power2.out",
     }, 0)
     .to(".profile-glow", {
-      boxShadow: "0 0 40px 15px rgba(168,85,247,0.5), 0 0 20px 10px rgba(20,183,137,0.4)",
+      transform: "scale(1)",
       duration: 0.6,
       ease: "power2.inOut",
     });
@@ -453,20 +453,19 @@ const Hero = () => {
               transition: 'transform 0.1s ease-out'
             }}
           >
-            <div className="profile-glow relative p-2 sm:p-3 rounded-[50%_20%_50%_20%] bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 transition-all duration-500 group-hover:scale-102 animate-gradient">
+            <div className="profile-glow relative">
               <img
                 src="/images/attia.png"
                 alt="Mohamed Attia - Full Stack Developer"
-                className="profile-img object-cover h-auto rounded-[50%_20%_50%_20%] shadow-[0_0_40px_15px_rgba(168,85,247,0.5),0_0_20px_10px_rgba(20,183,137,0.4)] transition-all duration-500 group-hover:shadow-[0_0_60px_20px_rgba(168,85,247,0.7),0_0_30px_15px_rgba(20,183,137,0.6)] w-56 sm:w-64 md:w-80 lg:w-96 xl:w-[28rem] 2xl:w-[32rem]"
+                className="profile-img object-cover h-auto rounded-lg transition-all duration-500 group-hover:scale-105 w-56 sm:w-64 md:w-80 lg:w-96 xl:w-[28rem] 2xl:w-[32rem]"
                 loading="eager"
                 sizes="(max-width: 640px) 224px, (max-width: 768px) 256px, (max-width: 1024px) 320px, 448px"
               />
               {/* Click hint */}
               <div className="absolute bottom-4 right-4 bg-white/90 text-gray-800 px-3 py-1 rounded-full text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                Click me! 🎨
+                
               </div>
             </div>
-            <div className="absolute -inset-3 bg-gradient-to-r from-purple-400/10 via-pink-400/10 to-blue-400/10 rounded-[50%_20%_50%_20%] opacity-0 group-hover:opacity-80 transition-all duration-500 blur-xl -z-10" />
           </div>
         </div>
       </div>
